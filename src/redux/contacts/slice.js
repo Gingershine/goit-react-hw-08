@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact } from './operations';
+import { logOut } from '../auth/operations';
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -38,6 +39,11 @@ state.isLoading = false;
 state.error = null
 const index = state.items.findIndex(contact => contact.id === action.payload.id);
 state.items.splice(index, 1);
+})
+.addCase(logOut.fulfilled, (state) => {
+  state.items = [];
+  state.error = null;
+  state.isLoading = false;
 })
 
 }
